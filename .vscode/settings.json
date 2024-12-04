@@ -1,0 +1,22 @@
+{
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact",
+        "typescriptreact": "html"
+    },
+    "emmet.triggerExpansionOnTab": true,
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+    "tailwindCSS.includeLanguages": {
+        "typescript": "javascript",
+        "typescriptreact": "html",
+        "javascript": "javascript",
+        "javascriptreact": "html"
+    },
+    "editor.inlineSuggest.enabled": true,
+    "tailwindCSS.experimental.classRegex": [
+        "className\\s*=\\s*\"([^\"]*)\"",
+        "className\\s*=\\s*'([^']*)'",
+        "className\\s*=\\s*`([^`]*)`"
+    ]
+}
