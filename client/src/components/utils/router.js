@@ -14,6 +14,7 @@ export const ROUTERS = {
       REGISTER: "/register",
     },
     CART: "/Cart",
+    PROFILE: "/profile/:id",
   },
   ADMIN: {
     DASHBOARD: "/admin", // Main admin route

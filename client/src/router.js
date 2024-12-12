@@ -13,6 +13,7 @@ import ProductDetail from "./components/pages/ProductDetail/ProductDetail.js";
 import Login from "./components/pages/Login/Login.js";
 import Register from "./components/pages/Register/Register.js";
 import Cart from "./components/pages/Cart/Cart.js";
+import Profile from "./components/pages/Profile/Profile.js";
 
 // Admin page
 import AdminDashboard from "./components/pages/Admin/AdminDashboard.js";
@@ -43,6 +44,7 @@ const RouterCustom = () => {
         <Route path={ROUTERS.CLIENT.AUTH.LOGIN} element={<Login />} />
         <Route path={ROUTERS.CLIENT.AUTH.REGISTER} element={<Register />} />
         <Route path={ROUTERS.CLIENT.CART} element={<Cart />} />
+        <Route path={ROUTERS.CLIENT.PROFILE} element={<Profile />} />
       </Route>
     </Routes>
   );

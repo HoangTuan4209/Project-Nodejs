@@ -3,7 +3,7 @@ import { Star, Gift, Check } from "lucide-react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCart } from "../Cart/CartContext";
-import { toast } from "react-hot-toast";
+import { toast, Toaster  } from "react-hot-toast";
 
 const ProductDetail = () => {
   const { id } = useParams(); // Lấy id từ URL
@@ -65,13 +65,18 @@ const ProductDetail = () => {
     // Nếu đã đăng nhập, thực hiện thêm vào giỏ hàng
     if (product) {
       addToCart(product);
-      toast.success("Đã thêm sản phẩm vào giỏ hàng!");
+      toast.success("Thêm sản phẩm vào giỏ hàng thành công!", {
+        duration: 2000,
+        position: 'top-center',
+        icon: '🛒',
+      });
     }
   };
 
   return (
     <div className="max-w-7xl mx-auto my-4 p-4">
       {/* Breadcrumb */}
+      <Toaster />
       <nav className="text-sm mb-4">
         <ol className="flex space-x-2">
           <li>

@@ -2,6 +2,7 @@
 import React, { memo } from "react";
 import { useLocation, Outlet } from "react-router-dom";
 import { ROUTERS } from "../../utils/router";
+import { Toaster } from "react-hot-toast";
 import Header from "../../Header.js";
 import Carousel from "../../Carousel.js";
 import CategoryList from "../../Categories.js";
@@ -17,12 +18,35 @@ const MasterLayout = () => {
       currentPath.includes(ROUTERS.CLIENT.PRODUCTS.PRODUCT_DETAIL) ||
       currentPath === ROUTERS.CLIENT.AUTH.LOGIN ||
       currentPath === ROUTERS.CLIENT.AUTH.REGISTER ||
-      currentPath === ROUTERS.CLIENT.CART
+      currentPath === ROUTERS.CLIENT.CART ||
+      currentPath === ROUTERS.CLIENT.PROFILE
     );
   };
 
   return (
     <div>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          // Các tùy chọn mặc định cho toast
+          duration: 2000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+          success: {
+            style: {
+              background: "green",
+            },
+          },
+          error: {
+            style: {
+              background: "red",
+            },
+          },
+        }}
+      />
       <Header />
       {!shouldHideComponents() && (
         <>

@@ -60,13 +60,6 @@ const userController = {
 
       const user = users[0];
 
-      // Kiểm tra password
-      //   const validPassword = await bcrypt.compare(password, user.password);
-      //   if (!validPassword) {
-      //     return res.status(401).json({
-      //       message: "Username hoặc mật khẩu không đúng",
-      //     });
-      //   }
       if (password !== user.password) {
         return res.status(401).json({
           message: "Username hoặc mật khẩu không đúng",
@@ -77,7 +70,7 @@ const userController = {
       const token = jwt.sign(
         { user_id: user.user_id, username: user.email },
         process.env.JWT_SECRET,
-        { expiresIn: "1d" }
+        { expiresIn: "1h" }
       );
 
       // Trong login API
@@ -175,6 +168,33 @@ const userController = {
         message: "Error deleting user",
         error: error.message,
       });
+    }
+  },
+
+  // Lấy thông tin hồ sơ người dùng
+  getUserProfile: async (req, res) => {
+    try {
+      const user_id = req.params.id;
+
+      const [users] = await db.query("SELECT * FROM users WHERE user_id = ?", [user_id]);
+
+      if (users.length === 0) {
+        return res.status(404).json({ message: "Người dùng không tồn tại" });
+      }
+
+      const user = users[0];
+      res.json({
+        user_id: user.user_id,
+        username: user.username,
+        email: user.email,
+        full_name: user.full_name,
+        phone: user.phone,
+        address: user.address,
+        role_id: user.role_id,
+      });
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      res.status(500).json({ message: "Đã có lỗi xảy ra" });
     }
   },
 };
