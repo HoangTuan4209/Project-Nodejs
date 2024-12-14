@@ -1,12 +1,16 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useCart } from "./CartContext";
 import { Minus, Plus, X, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { cart, removeFromCart, updateQuantity, getCartTotal } = useCart();
+  const { cart, removeFromCart, updateQuantity, getCartTotal, clearCart } = useCart();
   const navigate = useNavigate();
+
+  // Lấy thông tin người dùng từ localStorage
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user ? user.user_id : null; // Lấy userId nếu người dùng đã đăng nhập
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat("vi-VN", {
@@ -23,6 +27,39 @@ const Cart = () => {
   const handleRemoveItem = (productId) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
       removeFromCart(productId);
+    }
+  };
+
+  const handleCheckout = async () => {
+    if (!userId) {
+      alert("Vui lòng đăng nhập để đặt hàng.");
+      return;
+    }
+
+    try {
+      const cartItems = cart.map((item) => ({
+        product_id: item.product_id,
+        quantity: item.quantity,
+        price: item.price,
+      }));
+
+      const response = await fetch("http://localhost:8000/api/orders/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ userId, cartItems }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Không thể tạo đơn hàng");
+      }
+      alert("Đơn hàng đã được đặt thành công!");
+      clearCart();
+    } catch (error) {
+      console.error("Lỗi khi đặt hàng:", error);
+      alert("Đặt hàng thất bại!");
     }
   };
 
@@ -135,12 +172,12 @@ const Cart = () => {
               </div>
             </div>
 
-            <Link
-              to="/checkout"
+            <button
+              onClick={handleCheckout}
               className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
             >
               Đặt hàng
-            </Link>
+            </button>
 
             <Link
               to="/"

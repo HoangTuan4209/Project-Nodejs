@@ -1,6 +1,5 @@
 const db = require("../config/database");
 const User = require("../models/userModel");
-// const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const userController = {
@@ -20,10 +19,6 @@ const userController = {
           message: "Username hoặc email đã tồn tại",
         });
       }
-
-      // Mã hóa password
-    //   const salt = await bcrypt.genSalt(10);
-    //   const hashedPassword = await bcrypt.hash(password, salt);
 
       // Thêm user mới
       const [result] = await db.query(

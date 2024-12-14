@@ -1,7 +1,6 @@
 const db = require('../config/database');
 
 const Product = {
-    // Giữ nguyên các methods cũ
     getAllProducts: async () => {
         try {
             const [results] = await db.query('SELECT * FROM products');

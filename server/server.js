@@ -4,6 +4,7 @@ const configStaticFile = require('./src/config/configStatic');
 const productRoutes = require('./src/routes/productRoutes');
 const categoryRoutes = require('./src/routes/categoriesRouter');
 const userRoutes = require('./src/routes/userRouter');
+const orderRoutes = require('./src/routes/orderRoutes');
 
 
 const app = express();
@@ -29,15 +30,8 @@ app.get('/', (req, res) => {
 app.use('/api', productRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', userRoutes);
+app.use('/api/orders', orderRoutes);
 
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ message: 'Something broke!' });
-});
-
-// Start server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
