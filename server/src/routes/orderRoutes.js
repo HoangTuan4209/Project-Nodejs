@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createOrder } = require('../controllers/orderController');
+const { createOrder, getAllOrders, updateOrderStatus} = require('../controllers/orderController');
 
 router.post('/create', async (req, res) => {
   const { userId, cartItems } = req.body;
@@ -13,5 +13,8 @@ router.post('/create', async (req, res) => {
     res.status(500).json(result);
   }
 });
+
+router.get('/all', getAllOrders);
+router.put('/update-status/:orderId', updateOrderStatus);
 
 module.exports = router;
